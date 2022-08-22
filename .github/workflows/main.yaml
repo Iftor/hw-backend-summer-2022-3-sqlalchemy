@@ -4,7 +4,7 @@ jobs:
   runner-job:
     runs-on: ubuntu-latest
     env:
-      IMAGE: 'ktshub/backend-summer-2021:task-6a4c4c31-536f-4469-8f72-e15ba616d4a8'
+      IMAGE: 'ktshub/backend-summer-2021:task-9676ecaf-e2a4-473a-803f-df790da37aaa'
       CONFIGPATH: /go/code/source/tests/config.yml
       PYTHONPATH: /go/code/source
     services:
@@ -24,16 +24,16 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
         with:
-            python-version: 3.9
+            python-version: 3.10
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
       - name: update pythonpath
-        run: echo "PYTHONPATH=$PYTHONPATH:/home/runner/work/hw-backend-summer-2021-3-db_gino/hw-backend-summer-2021-3-db_gino" >> $GITHUB_ENV
+        run: echo "PYTHONPATH=$PYTHONPATH:/home/runner/work/hw-backend-summer-2022-3-sqlalchemy/hw-backend-summer-2022-3-sqlalchemy" >> $GITHUB_ENV
 
       - name: set CONFIGPATH
-        run: echo "CONFIGPATH=/home/runner/work/hw-backend-summer-2021-3-db_gino/hw-backend-summer-2021-3-db_gino/tests/config.yml" >> $GITHUB_ENV
+        run: echo "CONFIGPATH=/home/runner/work/hw-backend-summer-2022-3-sqlalchemy/hw-backend-summer-2022-3-sqlalchemy/tests/config.yml" >> $GITHUB_ENV
 
       - name: handle migrations
         run:  alembic upgrade head
