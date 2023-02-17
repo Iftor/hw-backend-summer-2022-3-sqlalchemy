@@ -32,6 +32,10 @@ class DatabaseConfig:
     password: str = "postgres"
     database: str = "project"
 
+    @property
+    def url(self):
+        return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}/{self.database}"
+
 
 @dataclass
 class Config:

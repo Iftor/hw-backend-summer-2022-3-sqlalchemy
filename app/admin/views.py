@@ -11,10 +11,26 @@ class AdminLoginView(View):
     @request_schema(AdminSchema)
     @response_schema(AdminSchema, 200)
     async def post(self):
-        raise NotImplementedError
+        email = self.data["email"]
+        password = self.data["password"]
+
+        manager_data = await self.store.admins.get_by_email(email)
+        if not manager_data:
+            raise HTTPForbidden
+
+        if not manager_data.is_password_valid(password):
+            raise HTTPForbidden
+
+        session = await new_session(self.request)
+        raw_manager_data = AdminSchema().dump(manager_data)
+        session["admin"] = raw_manager_data
+
+        return json_response(data=raw_manager_data)
 
 
 class AdminCurrentView(View):
     @response_schema(AdminSchema, 200)
     async def get(self):
-        raise NotImplementedError
+        if not (manager_data := self.request.admin):
+            raise HTTPUnauthorized
+        return json_response(data=AdminSchema().dump(manager_data))
