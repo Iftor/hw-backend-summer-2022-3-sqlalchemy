@@ -17,6 +17,7 @@ class Database:
 
     async def connect(self, *_: list, **__: dict) -> None:
         self._db = db
+
         self._engine = create_async_engine(self.app.config.database.url, echo=True)
         self.session = sessionmaker(self._engine, class_=AsyncSession, expire_on_commit=False)
 
